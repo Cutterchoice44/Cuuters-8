@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cutters Choice Radio</title>
+  <style>
+    :root {
+      --brand-teal: #5A8785;
+      --bg-dark: #111;
+      --text-light: #fafafa;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      font-family: Arial, sans-serif;
+      line-height: 1.4;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1rem;
+      background: #000;
+    }
+    header .title h1 {
+      font-size: 5.5rem;
+      margin: 0;
+    }
+    header .title .tagline {
+      font-size: 2.3rem;
+      margin: 0;
+    }
+
+    .schedule h3 {
+      border-top: 1px solid var(--brand-teal);
+      padding-top: 0.6rem;
+      margin-top: 1.4rem;
+    }
+
+    #mixcloud-list {
+      overflow-y: visible;
+      padding-right: 5px;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      scroll-behavior: smooth;
+      background: #000;
+    }
+    #mixcloud-list .mixcloud-container {
+      position: relative;
+      margin-bottom: 6px;
+      background: #000;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    #mixcloud-list iframe {
+      width: 100%;
+      height: 180px;
+      display: block;
+      background: #000;
+      border: none;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: var(--brand-teal);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .add-mixcloud {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    .add-mixcloud input {
+      width: 80%;
+      max-width: 600px;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    .add-mixcloud button {
+      padding: 0.5rem 2rem;
+      font-size: 1rem;
+      background: var(--brand-teal);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    footer.banner {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      background: var(--brand-teal);
+      padding: 1rem;
+    }
+    footer.banner a {
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.4rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s ease;
+    }
+    footer.banner a:hover {
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+      header .title h1 {
+        font-size: 2.5rem;
+      }
+      header .title .tagline {
+        font-size: 1.4rem;
+      }
+      .add-mixcloud input {
+        width: 95%;
+      }
+      .add-mixcloud button {
+        width: 100%;
+      }
+      footer.banner {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img class="logo" src="https://i.imgur.com/3eKO6TQ.png" alt="Cutters Choice Radio Logo" style="width:100%; max-width:250px; height:auto; margin-bottom:0.5rem;">
+    <div class="title">
+      <h1>Cutters Choice Radio</h1>
+      <p class="tagline">The home of relentless flavas and significant bangers!</p>
+    </div>
+    <img class="logo" src="https://i.imgur.com/3eKO6TQ.png" alt="Cutters Choice Radio Logo" style="width:100%; max-width:250px; height:auto; margin-bottom:0.5rem;">
+  </header>
+<div class="teal-line"></div>
+
+  <div class="grid-container">
+
+    <section class="chat">
+      <h2>Cutters Chat</h2>
+      <iframe title="Cutters Choice Radio Chat" src="https://app.radiocult.fm/embed/chat/cutters-choice-radio?theme=midnight&primaryColor=%235A8785&corners=sharp" width="100%" height="700" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" seamless></iframe>
+    </section>
+
+    <section class="live-player">
+      <h2>Live Now</h2>
+      <div class="player-container">
+        <iframe id="inlinePlayer" title="Cutters Choice Radio player" src="https://app.radiocult.fm/embed/square-player/cutters-choice-radio?theme=midnight&primaryColor=%235A8785&corners=sharp" allow="autoplay" style="width:100%; height:100px; margin-top:5px; border:none; border-radius:4px;"></iframe>
+        <div id="now-archive" style="font-weight: bold; color: #5A8785; font-size: 1.2rem; margin-top: 0.5rem;">Loading archive show…</div>
+        <button id="popOutBtn" style="margin-top:10px; padding:0.5rem 2rem; font-size:1rem;">Pop Out Player</button>
+      </div>
+      <h3 id="now-dj">Loading current show…</h3>
+      <img id="now-art" src="https://i.imgur.com/EHhS47F.png" alt="Current DJ Artwork" style="width:100%; max-width:700px; margin-top:0.5rem; border-radius:4px;">
+    </section>
+
+    <section class="schedule">
+      <h2 class="schedule-heading">This Week’s Lineup</h2>
+      <div class="schedule-scroll" id="schedule-container">
+        <p>Loading this week’s schedule…</p>
+      </div>
+    </section>
+
+    <section class="mixcloud">
+      <h2>Latest Archived Shows</h2>
+      <div id="mixcloud-list">
+  <div class="mixcloud-container">
+    <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=1&feed=https://www.mixcloud.com/doubledotdash/the-doubledotdash-radio-show-on-cutters-choice-radio-28042025/"></iframe>
+  </div>
+  <div class="mixcloud-container">
+    <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=1&feed=https://www.mixcloud.com/glitter_tits/the-mojo-dojo-cara-house-on-ccr-25425/"></iframe>
+  </div>
+  <div class="mixcloud-container">
+    <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=1&feed=https://www.mixcloud.com/CuttersChoiceRadio/the-benny-fonz-mws-session-230425/"></iframe>
+  </div>
+  <div class="mixcloud-container">
+    <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=1&feed=https://www.mixcloud.com/CuttersChoiceRadio/marionette-faux-archie-its-not-tasmania/"></iframe>
+  </div>
+  <div class="mixcloud-container">
+    <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=1&feed=https://www.mixcloud.com/Qualitychoicevideoclub/quality-choice-video-club-w-eurotrash-steve-4-19-2025/"></iframe>
+  </div>
+  <div class="mixcloud-container">
+    <iframe… [TRUNCATED FOR BREVITY]
+</html>
